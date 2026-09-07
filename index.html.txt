@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nikkah Invitation - Muhammad Sami & Pakeeza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Great+Vibes&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+        .mobile-frame {
+            width: 100%;
+            max-width: 412px;
+            height: 100%;
+            max-height: 847px;
+            background: #fbf9f4;
+            position: relative;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 4px solid #d4af37;
+        }
+        
+        /* Ribbon Opening Overlay */
+        .ribbon-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Horizontal Ribbon Strip */
+        .ribbon-h {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 50px;
+            transform: translateY(-50%);
+            background: linear-gradient(to bottom, #f3e0aa, #d4af37, #9a7b21);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 12;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* Vertical Ribbon Strip */
+        .ribbon-v {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50px;
+            height: 100%;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, #f3e0aa, #d4af37, #9a7b21);
+            box-shadow: 4px 0 15px rgba(0,0,0,0.3);
+            z-index: 11;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* Realistic Center Bow & Seal */
+        .ribbon-bow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            width: 85px;
+            height: 85px;
+            background: #5c1d24;
+            border: 3px solid #d4af37;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.5s ease, opacity 0.4s ease;
+        }
+        .ribbon-bow span {
+            font-size: 10px;
+            font-weight: 600;
+            color: #f4d06f;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* Opening / Untie Animation Classes */
+        .ribbon-screen.open .ribbon-h {
+            transform: translateY(-50%) scaleX(0);
+        }
+        .ribbon-screen.open .ribbon-v {
+            transform: translateX(-50%) scaleY(0);
+        }
+        .ribbon-screen.open .ribbon-bow {
+            transform: translate(-50%, -50%) scale(0) rotate(180deg);
+            opacity: 0;
+        }
+        .ribbon-screen.open {
+            pointer-events: none;
+            transition: visibility 0s 0.8s;
+            visibility: hidden;
+        }
+
+        /* Invitation Slides Content */
+        .hidden {
+            display: none;
+        }
+        .invitation-content {
+            animation: fadeIn 1.2s ease-in-out;
+        }
+        .card-slide {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #fbf9f4 0%, #f4ecdf 100%);
+            border-bottom: 2px solid #e6d5bc;
+            position: relative;
+        }
+        .bismillah {
+            font-size: 18px;
+            color: #8b6b33;
+            margin-bottom: 15px;
+        }
+        .sub-title {
+            font-size: 9px;
+            letter-spacing: 2px;
+            color: #665c47;
+            margin-bottom: 20px;
+        }
+        .names {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            color: #2c2c2c;
+            margin: 5px 0;
+        }
+        .amp {
+            font-family: 'Great Vibes', cursive;
+            color: #8b6b33;
+            font-size: 28px;
+            margin: 2px 0;
+        }
+        .info-grid {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+        }
+        .info-item strong {
+            font-size: 10px;
+            color: #8b6b33;
+            letter-spacing: 1px;
+        }
+        .info-item p {
+            font-size: 13px;
+            color: #333;
+            font-weight: 600;
+            margin-top: 4px;
+        }
+        .sub-text {
+            font-size: 10px !important;
+            color: #666 !important;
+            font-weight: 400 !important;
+        }
+        .scroll-hint {
+            position: absolute;
+            bottom: 20px;
+            font-size: 10px;
+            letter-spacing: 2px;
+            color: #8b6b33;
+        }
+        .second-slide {
+            background: #f4ecdf;
+        }
+        .second-slide h2 {
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #8b6b33;
+            margin-bottom: 10px;
+        }
+        .venue-name {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            color: #2c2c2c;
+            font-weight: 600;
+        }
+        .time-note {
+            font-size: 12px;
+            color: #555;
+            margin-top: 2px;
+        }
+        .gathering-box {
+            margin-top: 25px;
+            padding: 15px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid #d4af37;
+            border-bottom: 1px solid #d4af37;
+        }
+        .gathering-box h3 {
+            font-size: 10px;
+            letter-spacing: 1px;
+            color: #8b6b33;
+            margin-bottom: 6px;
+        }
+        .banquet {
+            font-family: 'Great Vibes', cursive;
+            font-size: 26px;
+            color: #2c2c2c;
+        }
+        .blessing-note {
+            font-style: italic;
+            font-size: 12px;
+            color: #555;
+            margin-top: 25px;
+            padding: 0 10px;
+        }
+        .map-btn {
+            background: #d4af37;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="mobile-frame">
+        <!-- REALISTIC CROSS RIBBON & WAX SEAL -->
+        <div id="ribbon-screen" class="ribbon-screen" onclick="openRibbon()">
+            <div class="ribbon-v"></div>
+            <div class="ribbon-h"></div>
+            <div class="ribbon-bow">
+                <span>TAP TO OPEN</span>
+            </div>
+        </div>
+
+        <!-- MAIN INVITATION CONTENT -->
+        <div id="invitation-content" class="invitation-content hidden">
+            <div class="card-slide">
+                <span class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+                <span class="sub-title">YOU ARE CORDIALLY INVITED TO THE NIKKAH OF</span>
+                
+                <h1 class="names">Muhammad Sami Khan</h1>
+                <span class="amp">and</span>
+                <h1 class="names">Pakeeza Ghayas</h1>
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <strong>DATE</strong>
+                        <p>20 September 2026</p>
+                        <p class="sub-text">09 Rabi Us Sani 1448 AH</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>DAY</strong>
+                        <p>Sunday</p>
+                    </div>
+                </div>
+                
+                <div class="scroll-hint">SCROLL DOWN ↓</div>
+            </div>
+
+            <div class="card-slide second-slide">
+                <h2>VENUE (NIKKAH)</h2>
+                <p class="venue-name">Jamia tur Rashidiya Masjid</p>
+                <p class="time-note">at Maghrib prayers</p>
+                
+                <div class="gathering-box">
+                    <h3>FOLLOWED BY GATHERING AT</h3>
+                    <p class="banquet">Tabish Banquet</p>
+                    <p class="time-note">at 7:00 PM</p>
+
+                <p class="blessing-note">"Your presence will be a source of blessings for the new beginning."</p>
+                
+                <button class="map-btn" onclick="alert('Google Maps location opened!')">Open Map Location</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openRibbon() {
+            const ribbonScreen = document.getElementById('ribbon-screen');
+            const invitationContent = document.getElementById('invitation-content');
+
+            // Trigger smooth scaling/untie animation
+            ribbonScreen.classList.add('open');
+            invitationContent.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
